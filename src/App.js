@@ -4,6 +4,8 @@ import Editor from './components/Editor';
 import FileManager from './components/FileManager';
 import Navbar from './components/Navbar';
 
+import { FileManagerProvider } from './context/FileManagerContext';
+
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
 		display: 'grid',
@@ -18,8 +20,10 @@ function App() {
 			<CssBaseline />
 			<Navbar />
 			<div className={classes.wrapper}>
-				<FileManager />
-				<Editor />
+				<FileManagerProvider>
+					<FileManager />
+					<Editor />
+				</FileManagerProvider>
 			</div>
 		</div>
 	);

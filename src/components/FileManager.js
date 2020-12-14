@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
 import { TreeView, TreeItem } from '@material-ui/lab';
 import { VscChevronRight, VscChevronDown } from 'react-icons/vsc';
 
-import { data } from '../data/index';
 import { icons } from '../icons/index';
+
+import { FileManagerContext } from '../context/FileManagerContext';
 
 const useStyles = makeStyles((theme) => ({
 	fileManager: {
@@ -31,16 +32,24 @@ const useStyles = makeStyles((theme) => ({
 	},
 	labelText: {
 		marginLeft: 8,
-		fontWeight:'100',
-		lineHeight: '2'
+		fontWeight: '100',
+		lineHeight: '2',
 	},
 }));
 
 const FileManager = () => {
 	const classes = useStyles();
+	const { files, changeFile } = useContext(FileManagerContext);
+	const [parentID, setParentID] = useState('0');
 
+	const selectFile = (nodes) => {
+		setParentID(nodes.parentID)
+	};
+
+	
 	const renderTree = (nodes) => (
 		<TreeItem
+			onClick={() => selectFile(nodes)}
 			key={nodes.id}
 			nodeId={nodes.id}
 			label={
@@ -67,7 +76,7 @@ const FileManager = () => {
 				defaultCollapseIcon={<VscChevronDown />}
 				defaultExpanded={['0']}
 				defaultExpandIcon={<VscChevronRight />}>
-				{renderTree(data)}
+				{renderTree(files)}
 			</TreeView>
 		</Box>
 	);
