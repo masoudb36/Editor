@@ -1,6 +1,7 @@
 export const data = {
 	id: '0',
 	name: 'Project',
+	type: 'dir',
 	children: [
 		{
 			id: '1',
