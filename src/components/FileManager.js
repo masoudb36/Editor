@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 
-import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import { TreeView, TreeItem } from '@material-ui/lab';
 import { VscChevronRight, VscChevronDown } from 'react-icons/vsc';
 
 import { icons } from '../icons/index';
 
 import { FileManagerContext } from '../context/FileManagerContext';
+import MenuItem from './MenuItem';
 
 const useStyles = makeStyles((theme) => ({
 	fileManager: {
@@ -14,12 +15,7 @@ const useStyles = makeStyles((theme) => ({
 		height: '89.6vh',
 		color: '#fff',
 	},
-	titleBox: {
-		backgroundColor: '#252526',
-		padding: theme.spacing(1.5),
-		color: '#eaa445',
-		borderColor: '#fff',
-	},
+
 	fileRoot: {
 		padding: theme.spacing(2),
 	},
@@ -37,28 +33,33 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+
+
 const FileManager = () => {
 	const classes = useStyles();
-	const { files, changeFile } = useContext(FileManagerContext);
+	const { files } = useContext(FileManagerContext);
 	const [parentID, setParentID] = useState('0');
 
 	const selectFile = (nodes) => {
-		setParentID(nodes.parentID)
+		nodes.type === 'dir' ? setParentID(nodes.id) : setParentID(nodes.parentID);
 	};
 
-	
 	const renderTree = (nodes) => (
 		<TreeItem
 			onClick={() => selectFile(nodes)}
 			key={nodes.id}
 			nodeId={nodes.id}
 			label={
-				<div className={classes.labelWrap}>
-					{icons[nodes.type]}
-					<Typography variant='body2' className={classes.labelText}>
-						{nodes.name}
-					</Typography>
-				</div>
+				nodes.type === 'dir' && nodes.newFile ? (
+					<div>newFile</div>
+				) : (
+					<div className={classes.labelWrap}>
+						{icons[nodes.type]}
+						<Typography variant='body2' className={classes.labelText}>
+							{nodes.name}
+						</Typography>
+					</div>
+				)
 			}>
 			{Array.isArray(nodes.children)
 				? nodes.children.map((node) => renderTree(node))
@@ -68,9 +69,7 @@ const FileManager = () => {
 
 	return (
 		<Box className={classes.fileManager}>
-			<Paper square className={classes.titleBox}>
-				Explorer
-			</Paper>
+			<MenuItem parentID={parentID} />
 			<TreeView
 				className={classes.fileRoot}
 				defaultCollapseIcon={<VscChevronDown />}

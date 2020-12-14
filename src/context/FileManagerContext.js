@@ -6,11 +6,11 @@ export const FileManagerContext = createContext();
 
 export const FileManagerProvider = ({ children }) => {
 	const [files, dispatch] = useReducer(filesReducer, data);
-	const changeFile = (action) => {
+	const changeFiles = (action) => {
 		dispatch(action);
 	};
 	return (
-		<FileManagerContext.Provider value={{ files, changeFile }}>
+		<FileManagerContext.Provider value={{ files, changeFiles }}>
 			{children}
 		</FileManagerContext.Provider>
 	);

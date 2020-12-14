@@ -2,12 +2,14 @@ export const data = {
 	id: '0',
 	name: 'Project',
 	type: 'dir',
+	newFile: false,
 	children: [
 		{
 			id: '1',
 			name: 'node-modules',
 			type: 'dir',
 			parentID: '0',
+			newFile: false,
 			children: [
 				{
 					id: '8',
@@ -34,6 +36,7 @@ export const data = {
 			name: 'public',
 			type: 'dir',
 			parentID: '0',
+			newFile: false,
 			children: [
 				{
 					id: '4',
