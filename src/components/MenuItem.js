@@ -32,9 +32,16 @@ const useStyles = makeStyles((theme) => ({
 const MenuItem = ({ parentID }) => {
 	const classes = useStyles();
 	const { changeFiles } = useContext(FileManagerContext);
-
+	
 	const addNewFile = () => {
-		changeFiles({ type: types.addFile, parentID, newFile: true });
+		const newFile = {
+			id: uuid(),
+			type: 'newFile',
+			parentID: parentID,
+			iconType:'file'
+		};
+
+		changeFiles({ type: types.addInput, parentID, newFile });
 	};
 
 	return (

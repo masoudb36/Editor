@@ -8,6 +8,7 @@ import { icons } from '../icons/index';
 
 import { FileManagerContext } from '../context/FileManagerContext';
 import MenuItem from './MenuItem';
+import NewFile from './NewFile';
 
 const useStyles = makeStyles((theme) => ({
 	fileManager: {
@@ -33,12 +34,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-
-
 const FileManager = () => {
 	const classes = useStyles();
 	const { files } = useContext(FileManagerContext);
 	const [parentID, setParentID] = useState('0');
+	console.log(files);
 
 	const selectFile = (nodes) => {
 		nodes.type === 'dir' ? setParentID(nodes.id) : setParentID(nodes.parentID);
@@ -50,8 +50,8 @@ const FileManager = () => {
 			key={nodes.id}
 			nodeId={nodes.id}
 			label={
-				nodes.type === 'dir' && nodes.newFile ? (
-					<div>newFile</div>
+				nodes.type === 'newFile' ? (
+					<NewFile iconType={nodes.iconType} />
 				) : (
 					<div className={classes.labelWrap}>
 						{icons[nodes.type]}

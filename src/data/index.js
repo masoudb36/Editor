@@ -43,6 +43,7 @@ export const data = {
 					name: 'Components',
 					type: 'dir',
 					parentID: '3',
+					children: [],
 				},
 				{
 					id: '5',

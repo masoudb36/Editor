@@ -2,9 +2,10 @@ import { types } from '../actions/index';
 
 export default function filesReducer(files, action) {
 	switch (action.type) {
-		case types.addFile:
-			console.log(action.parentID);
+		case types.addInput:
 			findFile(files, action);
+			return { ...files };
+		case types.addFile:
 			return { ...files };
 		case types.addFolder:
 			return { ...files };
@@ -18,8 +19,9 @@ export default function filesReducer(files, action) {
 }
 
 function findFile(nodes, action) {
-	if (nodes.parentID === action.parentIDid) {
-		nodes.newFile = action.newFile;
+	if (nodes.id === action.parentID) {
+		nodes.children = [action.newFile, ...nodes.children];
+		console.log(nodes);
 	} else {
 		Array.isArray(nodes.children) &&
 			nodes.children.map((node) => findFile(node, action));
