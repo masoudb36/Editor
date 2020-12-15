@@ -7,6 +7,8 @@ import { VscChevronRight, VscChevronDown } from 'react-icons/vsc';
 import { icons } from '../icons/index';
 
 import { FileManagerContext } from '../context/FileManagerContext';
+import { SelectedFileContext } from '../context/SelectedFileContext';
+
 import MenuItem from './MenuItem';
 import NewFile from './NewFile';
 
@@ -37,12 +39,18 @@ const useStyles = makeStyles((theme) => ({
 const FileManager = () => {
 	const classes = useStyles();
 	const { files } = useContext(FileManagerContext);
+	const { changeSelectedFile } = useContext(SelectedFileContext);
 	const [parentID, setParentID] = useState('0');
 
 	const selectFile = (nodes) => {
-		nodes.type === 'dir' ? setParentID(nodes.id) : setParentID(nodes.parentID);
+		if (nodes.type === 'dir') {
+			setParentID(nodes.id);
+		} else {
+			setParentID(nodes.parentID);
+			changeSelectedFile(nodes);
+		}
 	};
-// console.log(files);
+	// console.log(files);
 	const renderTree = (nodes) => (
 		<TreeItem
 			onClick={() => selectFile(nodes)}

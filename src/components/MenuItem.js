@@ -10,7 +10,7 @@ import { types } from '../context/actions/index';
 const useStyles = makeStyles((theme) => ({
 	menuItem: {
 		backgroundColor: '#252526',
-		padding: theme.spacing(1.5),
+		padding: theme.spacing(0 ,1.5),
 		borderColor: '#fff',
 		display: 'flex',
 		alignItems: 'center',
@@ -42,6 +42,10 @@ const MenuItem = ({ parentID }) => {
 		changeFiles({ type: types.addInput, parentID, newFile });
 	};
 
+	const clickRefresh=()=>{
+		changeFiles({ type: types.refresh });
+	}
+
 	return (
 		<Paper square className={classes.menuItem}>
 			<Typography className={classes.titleBox} variant='body1'>
@@ -54,7 +58,7 @@ const MenuItem = ({ parentID }) => {
 				<IconButton className={classes.icon} onClick={()=>addInput('dir')}>
 					<VscNewFolder />
 				</IconButton>
-				<IconButton className={classes.icon}>
+				<IconButton className={classes.icon} onClick={clickRefresh}>
 					<VscRefresh />
 				</IconButton>
 			</div>

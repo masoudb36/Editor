@@ -5,6 +5,7 @@ import FileManager from './components/FileManager';
 import Navbar from './components/Navbar';
 
 import { FileManagerProvider } from './context/FileManagerContext';
+import { SelectedFileProvider } from './context/SelectedFileContext';
 
 const useStyles = makeStyles((theme) => ({
 	wrapper: {
@@ -21,8 +22,10 @@ function App() {
 			<Navbar />
 			<div className={classes.wrapper}>
 				<FileManagerProvider>
-					<FileManager />
-					<Editor />
+					<SelectedFileProvider>
+						<FileManager />
+						<Editor />
+					</SelectedFileProvider>
 				</FileManagerProvider>
 			</div>
 		</div>
