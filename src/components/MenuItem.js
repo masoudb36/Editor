@@ -6,7 +6,6 @@ import { VscNewFile, VscNewFolder, VscRefresh } from 'react-icons/vsc';
 import { FileManagerContext } from '../context/FileManagerContext';
 
 import { types } from '../context/actions/index';
-import { v4 as uuid } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
 	menuItem: {
@@ -32,13 +31,12 @@ const useStyles = makeStyles((theme) => ({
 const MenuItem = ({ parentID }) => {
 	const classes = useStyles();
 	const { changeFiles } = useContext(FileManagerContext);
-	
-	const addNewFile = () => {
+
+	const addInput = (type) => {
 		const newFile = {
-			id: uuid(),
-			type: 'newFile',
+			id: '0',
+			type: type,
 			parentID: parentID,
-			iconType:'file'
 		};
 
 		changeFiles({ type: types.addInput, parentID, newFile });
@@ -50,10 +48,10 @@ const MenuItem = ({ parentID }) => {
 				Explorer
 			</Typography>
 			<div>
-				<IconButton className={classes.icon} onClick={addNewFile}>
+				<IconButton className={classes.icon} onClick={()=>addInput('file')}>
 					<VscNewFile />
 				</IconButton>
-				<IconButton className={classes.icon}>
+				<IconButton className={classes.icon} onClick={()=>addInput('dir')}>
 					<VscNewFolder />
 				</IconButton>
 				<IconButton className={classes.icon}>

@@ -38,20 +38,19 @@ const FileManager = () => {
 	const classes = useStyles();
 	const { files } = useContext(FileManagerContext);
 	const [parentID, setParentID] = useState('0');
-	console.log(files);
 
 	const selectFile = (nodes) => {
 		nodes.type === 'dir' ? setParentID(nodes.id) : setParentID(nodes.parentID);
 	};
-
+// console.log(files);
 	const renderTree = (nodes) => (
 		<TreeItem
 			onClick={() => selectFile(nodes)}
 			key={nodes.id}
 			nodeId={nodes.id}
 			label={
-				nodes.type === 'newFile' ? (
-					<NewFile iconType={nodes.iconType} />
+				nodes.id === '0' ? (
+					<NewFile iconType={nodes.type} parentID={parentID} />
 				) : (
 					<div className={classes.labelWrap}>
 						{icons[nodes.type]}
@@ -73,7 +72,7 @@ const FileManager = () => {
 			<TreeView
 				className={classes.fileRoot}
 				defaultCollapseIcon={<VscChevronDown />}
-				defaultExpanded={['0']}
+				defaultExpanded={['root']}
 				defaultExpandIcon={<VscChevronRight />}>
 				{renderTree(files)}
 			</TreeView>
