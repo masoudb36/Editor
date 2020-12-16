@@ -4,7 +4,7 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import { TreeView, TreeItem } from '@material-ui/lab';
 import { VscChevronRight, VscChevronDown } from 'react-icons/vsc';
 
-import { icons } from '../icons/index';
+import icons from '../icons/icons';
 
 import { FileManagerContext } from '../context/FileManagerContext';
 import { SelectedFileContext } from '../context/SelectedFileContext';
