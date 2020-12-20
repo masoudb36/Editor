@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { makeStyles, TextField } from '@material-ui/core';
-import { icons } from '../icons/index';
 import { FileManagerContext } from '../context/FileManagerContext';
+import { ParentIdContext } from '../context/ParentIdContext';
 import { types } from '../context/actions/index';
 import { v4 as uuid } from 'uuid';
+import { importImg } from '../tools/index';
+
 
 const useStyles = makeStyles((theme) => ({
 	newFile: {
@@ -13,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
 		'&.Mui-focused fieldset': {
 			borderColor: 'green',
 		},
-		'& svg': {
-			fontSize: 20,
+		'& img': {
+			width:20,
 			marginRight: theme.spacing(1),
 			opacity: 0.3,
 		},
@@ -35,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const NewFile = ({ iconType, parentID }) => {
+const NewFile = ({ iconType}) => {
 	const classes = useStyles();
 	const { files, changeFiles } = useContext(FileManagerContext);
+	const { parentId } = useContext(ParentIdContext);
 	const [value, setValue] = useState('');
 	const [error, setError] = useState(false);
 	const [nodes, setNodes] = useState([]);
@@ -52,7 +55,7 @@ const NewFile = ({ iconType, parentID }) => {
 	};
 
 	useEffect(() => {
-		findNodes(files, parentID);
+		findNodes(files, parentId);
 		nodes.forEach((node) => {
 			if (node.name === value) {
 				setError(true);
@@ -62,10 +65,7 @@ const NewFile = ({ iconType, parentID }) => {
 
 	const handelSubmit = (e) => {
 		e.preventDefault();
-
-		console.log(error, nodes);
-		if (error) {
-		} else {
+		if (!error) {
 			iconType === 'file' ? addNewFile() : addNewFolder();
 		}
 		// console.log(value);
@@ -80,24 +80,24 @@ const NewFile = ({ iconType, parentID }) => {
 			id: uuid(),
 			name: value,
 			type: type,
-			parentID: parentID,
+			parentId: parentId,
 		};
-		changeFiles({ type: types.addFile, parentID, file });
+		changeFiles({ type: types.addFile, parentId, file });
 	};
 
 	const addNewFolder = () => {
 		const file = {
 			id: uuid(),
 			name: value,
-			type: 'dir',
-			parentID: parentID,
+			type: 'folder',
+			parentId: parentId,
 			children: [],
 		};
-		changeFiles({ type: types.addFolder, parentID, file });
+		changeFiles({ type: types.addFolder, parentId, file });
 	};
 
 	const removeInput = () => {
-		changeFiles({ type: types.removeInput, parentID });
+		changeFiles({ type: types.removeInput, parentId });
 	};
 
 	const handelInputValue = (e) => {
@@ -108,7 +108,7 @@ const NewFile = ({ iconType, parentID }) => {
 	return (
 		<div>
 			<form onSubmit={handelSubmit} className={classes.newFile}>
-				{icons[iconType]}
+				<img className={classes.icon} src={importImg( iconType,iconType)} alt={iconType} />
 				<TextField
 					error={error}
 					autoFocus

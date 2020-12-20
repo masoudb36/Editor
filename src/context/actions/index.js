@@ -4,4 +4,6 @@ export const types = {
 	addFolder: 'ADD_FOLDER',
 	refresh: 'REFRESH',
 	removeInput: 'REMOVE_INPUT',
+	openFile: 'OPEN_FILE',
+	closeFile: 'CLOSE_FILE',
 };

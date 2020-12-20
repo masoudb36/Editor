@@ -24,7 +24,7 @@ export default function filesReducer(files, action) {
 
 
 function addInput(nodes, action) {
-	if (nodes.id === action.parentID) {
+	if (nodes.id === action.parentId) {
 		nodes.children = [action.newFile, ...nodes.children];
 	} else {
 		Array.isArray(nodes.children) &&
@@ -33,7 +33,7 @@ function addInput(nodes, action) {
 }
 
 function addFile(nodes, action) {
-	if (nodes.id === action.parentID) {
+	if (nodes.id === action.parentId) {
 		nodes.children.shift();
 		nodes.children = [...nodes.children, action.file];
 	} else {
@@ -43,7 +43,7 @@ function addFile(nodes, action) {
 }
 
 function addFolder(nodes, action) {
-	if (nodes.id === action.parentID) {
+	if (nodes.id === action.parentId) {
 		nodes.children.shift();
 		nodes.children = [action.file, ...nodes.children];
 	} else {
@@ -53,7 +53,7 @@ function addFolder(nodes, action) {
 }
 
 function removeInput(nodes, action) {
-	if (nodes.id === action.parentID) {
+	if (nodes.id === action.parentId) {
 		nodes.children.shift();
 	} else {
 		Array.isArray(nodes.children) &&

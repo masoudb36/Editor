@@ -1,19 +1,19 @@
 export const data = {
 	id: 'root',
 	name: 'Project',
-	type: 'dir',
+	type: 'folder',
 	children: [
 		{
 			id: '1',
-			name: 'node-modules',
-			type: 'dir',
-			parentID: '0',
+			name: 'node_modules',
+			type: 'folder',
+			parentId: '0',
 			children: [
 				{
 					id: '8',
 					name: 'index.html',
-					type: 'html',
-					parentID: '1',
+					type: 'htm',
+					parentId: '1',
 					code:'index.html'
 
 				},
@@ -21,7 +21,7 @@ export const data = {
 					id: '9',
 					name: 'main.cpp',
 					type: 'cpp',
-					parentID: '1',
+					parentId: '1',
 					code:'main.cpp'
 
 				},
@@ -29,7 +29,7 @@ export const data = {
 					id: '7',
 					name: 'base.jsx',
 					type: 'jsx',
-					parentID: '1',
+					parentId: '1',
 					code:'base.jsx'
 				},
 			],
@@ -37,21 +37,21 @@ export const data = {
 		{
 			id: '3',
 			name: 'public',
-			type: 'dir',
-			parentID: '0',
+			type: 'folder',
+			parentId: '0',
 			children: [
 				{
 					id: '4',
 					name: 'Components',
-					type: 'dir',
-					parentID: '3',
+					type: 'folder',
+					parentId: '3',
 					children: [],
 				},
 				{
 					id: '5',
 					name: 'index.js',
 					type: 'js',
-					parentID: '3',
+					parentId: '3',
 					code:'index.js'
 
 				},
@@ -59,7 +59,7 @@ export const data = {
 					id: '6',
 					name: 'main.css',
 					type: 'css',
-					parentID: '3',
+					parentId: '3',
 					code:'main.css'
 
 				},
@@ -67,7 +67,7 @@ export const data = {
 					id: '7',
 					name: 'base.scss',
 					type: 'scss',
-					parentID: '3',
+					parentId: '3',
 					code:'base.scss'
 
 				},

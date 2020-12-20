@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import AceEditor from 'react-ace';
-import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
-import { SelectedFileContext } from '../context/SelectedFileContext';
-import { icons } from '../icons/index';
-import _ from 'lodash';
+import { makeStyles } from '@material-ui/core';
 
 import 'ace-builds/src-noconflict/mode-java';
 // import 'ace-builds/src-noconflict/mode-html';
@@ -12,12 +9,14 @@ import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-scss';
 import 'ace-builds/src-noconflict/mode-jsx';
 import 'ace-builds/src-noconflict/mode-php';
-import "ace-builds/src-noconflict/ext-language_tools";
+import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/theme-monokai';
-import brace from "brace";
-import "brace/ext/language_tools";
+// import brace from "brace";
+import 'brace/ext/language_tools';
 import 'brace/mode/html';
 import 'brace/snippets/html';
+
+import { languageIds } from '../icons/index';
 
 const useStyles = makeStyles((theme) => ({
 	editorWrapper: {
@@ -55,57 +54,29 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const languages = {
-	html: 'html',
-	css: 'css',
-	js: 'javascript',
-	scss: 'scss',
-	jsx: 'jsx',
-	php: 'php',
-};
-
-const Editor = () => {
+const Editor = ({ type, code }) => {
 	const classes = useStyles();
-	const { selectedFile } = useContext(SelectedFileContext);
 
 	const onChange = (newValue) => {
 		// console.log('change', newValue);
 	};
 
-	console.log(selectedFile);
-	const isSelectFile = _.isEmpty(selectedFile);
+	const mode = languageIds[type];
 
 	return (
-		<Box className={classes.editorWrapper}>
-			{isSelectFile ? (
-				<div className={classes.welcome}>
-					<Typography variant='h1'>Welcome</Typography>
-				</div>
-			) : (
-				<>
-					<Paper square className={classes.labelWrap}>
-						{icons[selectedFile.type]}
-						<Typography variant='body2' className={classes.labelText}>
-							{selectedFile.name}
-						</Typography>
-					</Paper>
-					<AceEditor
-						mode={languages[selectedFile.type]}
-						value={selectedFile.code}
-						theme='monokai'
-						onChange={onChange}
-						name='Editor'
-						editorProps={{ $blockScrolling: true }}
-						enableBasicAutocompletion={true}
-						enableLiveAutocompletion={true}
-						enableSnippets={true}
-						className={classes.editor}
-						fontSize={15}
-					
-					/>
-				</>
-			)}
-		</Box>
+		<AceEditor
+			mode={mode}
+			value={code}
+			theme='monokai'
+			onChange={onChange}
+			name='Editor'
+			editorProps={{ $blockScrolling: true }}
+			enableBasicAutocompletion={true}
+			enableLiveAutocompletion={true}
+			enableSnippets={true}
+			className={classes.editor}
+			fontSize={15}
+		/>
 	);
 };
 

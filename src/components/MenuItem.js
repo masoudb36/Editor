@@ -4,6 +4,7 @@ import { IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
 import { VscNewFile, VscNewFolder, VscRefresh } from 'react-icons/vsc';
 
 import { FileManagerContext } from '../context/FileManagerContext';
+import { ParentIdContext } from '../context/ParentIdContext';
 
 import { types } from '../context/actions/index';
 
@@ -28,18 +29,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MenuItem = ({ parentID }) => {
+const MenuItem = () => {
 	const classes = useStyles();
 	const { changeFiles } = useContext(FileManagerContext);
-
+	const { parentId } = useContext(ParentIdContext);
+// console.log(parentId);
 	const addInput = (type) => {
 		const newFile = {
 			id: '0',
 			type: type,
-			parentID: parentID,
+			parentId: parentId,
 		};
 
-		changeFiles({ type: types.addInput, parentID, newFile });
+		changeFiles({ type: types.addInput, parentId, newFile });
 	};
 
 	const clickRefresh=()=>{
@@ -55,7 +57,7 @@ const MenuItem = ({ parentID }) => {
 				<IconButton className={classes.icon} onClick={()=>addInput('file')}>
 					<VscNewFile />
 				</IconButton>
-				<IconButton className={classes.icon} onClick={()=>addInput('dir')}>
+				<IconButton className={classes.icon} onClick={()=>addInput('folder')}>
 					<VscNewFolder />
 				</IconButton>
 				<IconButton className={classes.icon} onClick={clickRefresh}>
